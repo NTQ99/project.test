@@ -1,4 +1,0 @@
-server.EnabledListeners = []string{"http"}
-server.Port = 8000
-
-swagger generate server -f ./swagger.json -A CRM
