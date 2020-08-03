@@ -1,0 +1,185 @@
+---
+swagger: "2.0"
+info:
+    title: API Title
+    version: "1.0"
+host: 127.0.0.1:8000
+basePath: "/api"
+schemes:
+    - http
+consumes:
+    - application/json
+produces:
+    - application/json
+paths:
+    "/common/user":
+        get:
+            tags:
+                - common/user
+            description: get users
+            summary: get users
+            operationId: getUser
+            parameters:
+                - name: page
+                  in: query
+                  description: number of pages to filter by
+                  required: false
+                  type: integer
+                  format: int32
+                - name: limit
+                  in: query
+                  description: maximum number of results to return
+                  required: false
+                  type: integer
+                  format: int32
+            responses:
+                "200":
+                    description: OK
+                    schema:
+                        type: array
+                        items:
+                            "$ref": "#/definitions/common.user"
+                "400":
+                    description: Bad Request
+                    schema:
+                        "$ref": "#/definitions/ErrorResult"
+        post:
+            tags:
+                - common/user
+            description: post users
+            summary: post users
+            operationId: postUser
+            parameters:
+                - name: users
+                  in: body
+                  description: New users to add
+                  required: true
+                  schema:
+                      type: array
+                      items:
+                          "$ref": "#/definitions/common.user"
+            responses:
+                "200":
+                    description: OK
+                    schema:
+                        type: array
+                        items:
+                            "$ref": "#/definitions/common.user"
+                "400":
+                    description: Bad Request
+                    schema:
+                        "$ref": "#/definitions/ErrorResult"
+        put:
+            tags:
+                - common/user
+            description: put users
+            summary: put users
+            operationId: putUser
+            parameters:
+                - name: task
+                  in: body
+                  description: put request
+                  required: true
+                  schema:
+                      type: object
+                      properties:
+                          ids:
+                              type: array
+                              items:
+                                  type: string
+                          users:
+                              type: array
+                              items:
+                                  "$ref": "#/definitions/common.user"
+            responses:
+                "200":
+                    description: OK
+                    schema:
+                        type: array
+                        items:
+                            "$ref": "#/definitions/common.user"
+                "400":
+                    description: Bad Request
+                    schema:
+                        "$ref": "#/definitions/ErrorResult"
+        delete:
+            tags:
+                - common/user
+            description: delete users
+            summary: delete users
+            operationId: deleteUser
+            parameters:
+                - name: ids
+                  in: body
+                  description: Id of users to delete
+                  required: true
+                  schema:
+                      type: array
+                      items:
+                          type: string
+            responses:
+                "200":
+                    description: OK
+                    schema:
+                        type: array
+                        items:
+                            "$ref": "#/definitions/common.user"
+                "400":
+                    description: Bad Request
+                    schema:
+                        "$ref": "#/definitions/ErrorResult"
+definitions:
+    common.user:
+        type: object
+        properties:
+            username:
+                type: string
+            first_name:
+                type: string
+            last_name:
+                type: string
+            email:
+                type: string
+            is_active:
+                type: boolean
+            is_admin:
+                type: boolean
+            is_staff:
+                type: boolean
+            date_joined:
+                type: string
+                format: date
+            role:
+                type: string
+            profile_pic:
+                type: string
+            has_sales_access:
+                type: boolean
+            has_marketing_access:
+                type: boolean
+    common.address:
+        type: object
+        properties:
+            address_line:
+                type: string
+            street:
+                type: string
+            city:
+                type: string
+            state:
+                type: string
+            postcode:
+                type: string
+            country:
+                type: string
+    ErrorResult:
+        type: object
+        required:
+            - code
+            - message
+        properties:
+            code:
+                type: integer
+                format: int32
+            message:
+                type: string

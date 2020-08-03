@@ -25,6 +25,7 @@ func main() {
 	api := operations.NewCRMAPI(swaggerSpec)
 	server := restapi.NewServer(api)
 	server.EnabledListeners = []string{"http"}
+	server.Host = os.Getenv("HOST")
 	server.Port = 8000
 	defer server.Shutdown()
 
