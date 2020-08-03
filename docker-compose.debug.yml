@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  project.test:
+    image: project.test
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000
